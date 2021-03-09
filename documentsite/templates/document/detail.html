@@ -1,0 +1,13 @@
+<form method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+{#     <label for="title">Title: </label>#}
+{#    <input id="title" type="text" name="title" value="{{ form.title }}">#}
+{#     <label for="description">Description: </label>#}
+{#    <input id="description" type="text" name="description" value="{{ form.description }}">#}
+{#    <label for="link">Link: </label>#}
+{#    <input id="link" type="text" name="link" value="{{ form.link }}">#}
+{#    <label for="type">Type: </label>#}
+{#    <input id="type" type="text" name="type" value="{{ form.type }}">#}
+    {{ form.as_p }}
+
+</form>

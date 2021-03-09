@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
+from django.utils.datetime_safe import datetime
 
 
 class UserManager(BaseUserManager):
@@ -33,7 +34,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=300)
+    # username = models.CharField(max_length=300)
     password = models.CharField(max_length=300)
     phonenumber = models.CharField(max_length=15, unique=True)
     email = models.EmailField(max_length=300, unique=True)
@@ -45,7 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     last_login = models.DateTimeField(null=True, blank=True)
-    date_joined = models.DateTimeField(auto_now_add=True)
+    date_joined = models.DateTimeField(default=datetime.now, blank=True)
     avatar = models.ImageField(blank=True, null=True)
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
@@ -59,20 +60,18 @@ class User(AbstractBaseUser, PermissionsMixin):
     # createDate = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     # editDate = models.DateTimeField(auto_now=True, null=True, blank=True)
     def __str__(self):
-        return f"{self.first_name} {self.last_name}"
+        return self.fullname
 
     pass
 
 
 class Topic(models.Model):
-    title = models.CharField(max_length=1000)
-    description = models.CharField(max_length=3000)
-    isActive = models.BooleanField(default=True)
+    title = models.CharField(max_length=300)
+    description = models.CharField(max_length=800)
+    is_active = models.BooleanField(default=True, null=True, blank=True)
 
     def __str__(self):
         return self.title
-
-    pass
 
 
 class Document(models.Model):
@@ -81,12 +80,19 @@ class Document(models.Model):
         ('Ebook', 'Ebook'),
         ('Audio', 'Audio'),
     )
-    title = models.CharField(max_length=1000)
-    description = models.CharField(max_length=3000)
-    isActive = models.BooleanField(default=True)
+    title = models.CharField(max_length=300)
+    description = models.CharField(max_length=800)
+    is_active = models.BooleanField(default=True, null=True, blank=True)
     createDate = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     editDate = models.DateTimeField(auto_now=True, null=True, blank=True)
-    link = models.FilePathField()
+    link = models.FileField(upload_to='resources')
     type = models.CharField(choices=TYPE_CHOICES, max_length=10)
-    idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    # idUser = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+
+
+class TopicDocument(models.Model):
     idTopic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    idDocument = models.ForeignKey(Document, on_delete=models.CASCADE)
