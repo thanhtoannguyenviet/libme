@@ -7,13 +7,11 @@ from documentsite import views,urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home_page),
-    path('document/', include(urls)),
-    # path('document/create', create),
-    # path('document/edit', edit),
-    # path('document/index', index),
+    path('', include(urls)),
     path('navigation', views.navigation, name='navigation'),
-    # path('treenav/', include('treenav.urls')),
+    path('detailpage/<id>', views.detailPDF_page),
+    # path('detailpage/<id>', views.PDFUserDetailView.as_view),
+    path('', views.home_page),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

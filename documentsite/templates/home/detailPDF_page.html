@@ -1,0 +1,112 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/build/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/web/pdf_viewer.js"></script>
+
+
+<div id="my_pdf_viewer">
+    <div id="canvas_container" >
+        <canvas id="the-canvas"></canvas>
+    </div>
+    <div id="navigation-controls">
+        <button id="prev">Previous</button>
+        <span>Page: <input type="number" value="1" id="current_page" /> / <span id="page_count"></span></span>
+
+        <button id="next">Next</button>
+    </div>
+  </div>
+     <script>
+     var url = '{{ document.link.url }}';
+    var pdfDoc = null,
+        pageNum = 1,
+        pageRendering = 2,
+        pageNumPending = null,
+        scale =1,
+        canvas = document.getElementById('the-canvas'),
+        ctx = canvas.getContext('2d');
+            /*if (@trang != 0) {
+                pageNum=@trang;
+            }*/
+    function renderPage(num) {
+        pageRendering = true;
+        // Using promise to fetch the page
+        pdfDoc.getPage(num).then(function (page) {
+            var viewport = page.getViewport({ scale: scale });
+            canvas.height = 625;
+            canvas.width = 500;
+            // Render PDF page into canvas context
+            var renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            var renderTask = page.render(renderContext);
+            // Wait for rendering to finish
+            renderTask.promise.then(function () {
+                pageRendering = false;
+                if (pageNumPending !== null) {
+                    // New page rendering is pending
+                    renderPage(pageNumPending);
+                    pageNumPending = null;
+                }
+            });
+        });
+        // Update page counters
+        document.getElementById('current_page').value = num;
+    }
+    document.getElementById('current_page').addEventListener('keypress', (e) => {
+    var code = (e.keyCode ? e.keyCode : e.which)
+        if (code == 13) {
+            var desiredPage = document.getElementById('current_page').valueAsNumber
+            if (desiredPage >= 1 && desiredPage <= document.getElementById('page_count').textContent)
+                renderPage(desiredPage);
+            }
+        }
+    )
+        function queueRenderPage(num) {
+
+       /* $.ajax({
+            type: "POST",
+            url: "https://localhost:44385/api/CheckHistory/",
+            dataType: "json",
+           // data: { MaSV:@sv.MaSV, MaSach:@Model.MaSach, SoTrang: num },
+            success: function (res) {
+        console.log(res)
+            },
+            error: function (err) {
+        console.log("ERROR:" + err)
+            }
+        })*/
+        if (pageRendering) {
+           pageNumPending = num;
+       } else {
+           renderPage(num);
+       }
+    }
+    function onPrevPage() {
+        if (pageNum <= 1) {
+            return;
+        }
+        pageNum--;
+        queueRenderPage(pageNum);
+    }
+    document.getElementById('prev').addEventListener('click', onPrevPage);
+    function onNextPage() {
+        if (pageNum >= pdfDoc.numPages) {
+            return;
+        }
+        pageNum++;
+        queueRenderPage(pageNum);
+    }
+    document.getElementById('next').addEventListener('click', onNextPage);
+    /**
+     * Asynchronously downloads PDF.
+     */
+    pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('page_count').textContent = pdfDoc.numPages;
+        // Initial/first page rendering
+        renderPage(pageNum);
+    });
+    </script>
+{% endblock %}

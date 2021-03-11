@@ -68,6 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Topic(models.Model):
     title = models.CharField(max_length=300)
     description = models.CharField(max_length=800)
+    image = models.ImageField(upload_to='images')
     is_active = models.BooleanField(default=True, null=True, blank=True)
 
     def __str__(self):
@@ -86,6 +87,7 @@ class Document(models.Model):
     createDate = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     editDate = models.DateTimeField(auto_now=True, null=True, blank=True)
     link = models.FileField(upload_to='resources')
+    image = models.ImageField(upload_to='images')
     type = models.CharField(choices=TYPE_CHOICES, max_length=10)
     # idUser = models.ForeignKey(User, on_delete=models.CASCADE)
 
