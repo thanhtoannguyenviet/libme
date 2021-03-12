@@ -531,6 +531,12 @@ button:hover::before,
   }
 }
 
+.aside {
+  position: sticky;
+  top: 0;
+  width: 300px;
+}
+
 .articles {
   background-color: #fafafa;
 }
@@ -597,4 +603,5 @@ button:hover::before,
 
 .article__description {
   font-size: 0.8125rem;
+  margin-bottom: 0.75rem;
 }

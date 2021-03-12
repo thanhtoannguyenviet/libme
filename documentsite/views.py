@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView, TemplateView
 from django.core.files.storage import FileSystemStorage
-from .forms import DocumentForm, TopicForm
-from .models import Document, Topic
+from .forms import DocumentForm, TopicForm, TopicDocumentForm
+from .models import Document, Topic, TopicDocument
 
 
 # from .forms import DocumentForm
@@ -68,6 +68,17 @@ class DocumentView:
         document = Document.objects.get(id=id)
         document.delete()
 
+    def retrievefilter(request, id):
+        lstopicdocument = TopicDocument.objects.filter(idTopic=id)
+        if lstopicdocument is not None:
+            listDocument = []
+            for topicDocument in lstopicdocument:
+                idDoc = topicDocument.idDocument
+                if idDoc != None:
+                    document = Document.objects.get(id=idDoc.id)
+                    listDocument.append(document)
+            return render(request, 'home/home_page.html', {'document': listDocument})
+
 
 class TopicView:
 
@@ -104,3 +115,34 @@ class TopicView:
     def delete(request, id):
         topic = Topic.objects.get(id=id)
         topic.delete()
+
+
+class TopicDocumentView:
+
+    # def index(request):
+    #     topicDocument = TopicDocument.objects.all()
+    #     context = {
+    #         "topicDocument": topicDocument
+    #     }
+    #     return render(request, "home/home_page.html", context)
+
+    def create(request):
+        form = TopicDocumentForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        else:
+            context = {"form": form}
+        return render(request, 'document/create.html', context)
+
+    def edit(request, id):
+        topicDocument = TopicDocument.objects.get(id=id)
+        form = TopicDocumentForm(request.POST or None, request.FILES or None, instance=topicDocument)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+        return render(request, 'document/create.html', {'form': form})
+
+    def delete(request, id):
+        topicDocument = TopicDocument.objects.get(id=id)
+        topicDocument.delete()

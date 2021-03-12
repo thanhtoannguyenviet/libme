@@ -1,5 +1,4 @@
 const btnHamburger = document.querySelector('#btnHamburger')
-
 const header = document.querySelector('.header')
 const body = document.querySelector('body')
 const overlay = document.querySelector('.overlay')
@@ -22,3 +21,4 @@ btnHamburger.addEventListener('click', function(){
         })
     }
 })
+
