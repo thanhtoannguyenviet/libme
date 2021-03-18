@@ -1,0 +1,63 @@
+.search{
+  height: 41rem;
+  position: relative;
+    background-image: url("/static/images/backgroundsearch.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  .container {
+    @include breakpoint-up(large) {
+      display: flex;
+      align-items: center;
+    }
+  }
+  &__bar{
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    background: #2f3640;
+    height: 40px;
+    border-radius: 40px;
+    padding: 15px;
+  }
+  &__txt{
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0px;
+    color: white;
+    font-size: 18px;
+    transition: 0.4s;
+    line-height: 25px;
+    width: 0px;
+  }
+  &__bar:hover> .search__txt{
+    width: 240px;
+    padding: 0.6px;
+  }
+  // &__group{
+  //  backdrop-filter: saturate(0.5);
+  //  height: 20.5rem;
+  //  width: 100%;
+  //}
+  //&__button{
+  //  margin: 100px 50px;
+  //  position: relative;
+  //  text-align: center;
+  //  width: 100px;
+  //  padding:10px;
+  //  font-size: 15px;
+  //  color: $limeGreen ;
+  //  border: 2.2px solid $limeGreen;
+  //  //letter-spacing: 8px;
+  //  cursor: pointer;
+  //  border-radius: 100px;
+  //  margin: 100px;
+  //  &:hover{
+  //    box-shadow:  0 5px 20px 0 $limeGreen inset, 0 5px 20px 0 $limeGreen,
+  //                  0 5px 20px 0 $limeGreen inset, 0 5px 20px 0 $limeGreen;
+  //  }
+  //}
+}
