@@ -8,18 +8,21 @@
     <title>Document</title>
     {% load static %}
     {% load render_partial %}
+    <script src="https://kit.fontawesome.com/1bb3f32b56.js" crossorigin="anonymous"></script>
 {#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">#}
     <link rel="stylesheet" href="{% static '/css/style.css' %}" />
 </head>
 <body>
 {% include "partial/header.html" %}
 {% include "partial/hero.html" %}
+{% include "partial/searchbar.html" %}
 {#<div class="container-xxl my-md-4 bd-layout">#}
 
-    {% render_partial 'navigation' %}
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
     <div class="row">
+
+    {% render_partial 'navigation' %}
         {% block content %}{% endblock %}
     </div>
 

@@ -1,63 +1,63 @@
-.search{
-  height: 41rem;
-  position: relative;
-    background-image: url("/static/images/backgroundsearch.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-  .container {
-    @include breakpoint-up(large) {
-      display: flex;
-      align-items: center;
-    }
-  }
-  &__bar{
-    left: 50%;
-    top: 50%;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    background: #2f3640;
-    height: 40px;
-    border-radius: 40px;
-    padding: 15px;
-  }
-  &__txt{
-    border: none;
-    background: none;
-    outline: none;
-    float: left;
-    padding: 0px;
-    color: white;
-    font-size: 18px;
-    transition: 0.4s;
-    line-height: 25px;
-    width: 0px;
-  }
-  &__bar:hover> .search__txt{
-    width: 240px;
-    padding: 0.6px;
-  }
-  // &__group{
-  //  backdrop-filter: saturate(0.5);
-  //  height: 20.5rem;
-  //  width: 100%;
-  //}
-  //&__button{
-  //  margin: 100px 50px;
-  //  position: relative;
-  //  text-align: center;
-  //  width: 100px;
-  //  padding:10px;
-  //  font-size: 15px;
-  //  color: $limeGreen ;
-  //  border: 2.2px solid $limeGreen;
-  //  //letter-spacing: 8px;
-  //  cursor: pointer;
-  //  border-radius: 100px;
-  //  margin: 100px;
-  //  &:hover{
-  //    box-shadow:  0 5px 20px 0 $limeGreen inset, 0 5px 20px 0 $limeGreen,
-  //                  0 5px 20px 0 $limeGreen inset, 0 5px 20px 0 $limeGreen;
-  //  }
-  //}
+.login{
+
+     &__box{
+          background: rgba( 0, 0, 0, 0.85 );
+          box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+          backdrop-filter: blur( 2.0px );
+          -webkit-backdrop-filter: blur( 2.0px );
+          border-radius: 10px;
+          border: 1px solid rgba( 255, 255, 255, 0.18 );
+          width: 450px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          padding: 60px;
+          transform: translate(-50%,-50%);
+          color: $white;
+     }
+     &__title{
+          float: left;
+          font-size: 40px;
+          border-bottom: 6px solid $limeGreen;
+          margin-bottom: 50px ;
+          padding: 13px 0;
+          color: $white;
+     }
+     .textbox{
+          width: 100%;
+          overflow: hidden;
+          font-size: 20px;
+          padding: 8px 0;
+          margin: 8px 0;
+          border-bottom:  1px solid $limeGreen;
+          i {
+          width: 26px;
+          float: left;
+          text-align: center;
+          }
+          input {
+               border: none;
+               outline: none;
+               background: none;
+               color:$white;
+               width: 100%;
+          }
+          ::placeholder{
+                    color: $lightGrayishBlue;
+                    opacity: 1;
+               background: none;
+          }
+     }
+     &__button{
+          width: 100%;
+          background: none;
+          border: $limeGreen solid 2px;
+          padding: 12px;
+          font-size: 15px;
+          cursor: pointer;
+          margin: 10px;
+          &:hover{
+               background: linear-gradient(to right, $limeGreen, $brightCyan) ;
+          }
+     }
 }

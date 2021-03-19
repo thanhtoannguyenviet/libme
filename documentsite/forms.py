@@ -1,6 +1,11 @@
 from django import forms
 from django.db import models
-from .models import Document, Topic, TopicDocument
+from .models import Document, Topic, TopicDocument, User
+
+class CreateUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email','phonenumber','fullname','avatar','dob','password']
 
 
 class DocumentForm(forms.ModelForm):

@@ -1,0 +1,19 @@
+{% extends 'admin.html' %}
+{% block content %}
+    <form method="post" class="login">
+    <div class="login__box">
+    {% csrf_token %}
+        <h1 class="login__title">Login</h1>
+        <div class="textbox">
+            <input type="text" placeholder="Username" name="username">
+        </div>
+
+        <div class="textbox">
+            <input type="password" placeholder="Password" name="password">
+        </div>
+{#    {{ form}}#}
+    <button type="submit" class="login__button">Login</button>
+    <p>Chưa có tài khoản? Tạo tài khoản <a href="/register">ở đây</a></p>
+        </div>
+    </form>
+{% endblock %}
