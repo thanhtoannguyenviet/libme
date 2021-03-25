@@ -89,7 +89,6 @@ class Document(models.Model):
     link = models.FileField(upload_to='resources')
     image = models.ImageField(upload_to='images')
     type = models.CharField(choices=TYPE_CHOICES, max_length=10)
-
     # idUser = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

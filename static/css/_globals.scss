@@ -68,7 +68,9 @@ a:visited,
 a:hover {
   text-decoration: none;
 }
-
+ul{
+  list-style-type: none;
+}
 // Spacing
 .container {
   max-width: 69.375rem;

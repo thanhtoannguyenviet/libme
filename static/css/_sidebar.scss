@@ -1,0 +1,73 @@
+.sidebar{
+    height: 100%;
+    width: 240px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    background: $limeGreen;
+    color:black;
+    overflow-y: auto;
+    &__header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        padding: 0rem 1rem;
+    }
+    &__menu{
+        padding: 1rem;
+    }
+    li{
+        margin-bottom: 1rem;
+    }
+    a{
+        color: #fff;
+        font-size: 1rem;
+        span{
+          &:last-child{
+                 padding: 0.5rem;
+          }
+        }
+    }
+}
+.main{
+    margin-top: 60px;
+    background: whitesmoke;
+    padding: 1rem 3rem;
+    min-height: 90vh;
+    position: relative;
+    margin-left: 240px;
+}
+.input-field {
+    padding: 10px;
+    margin: 10px;
+    label {
+        width: 300px;
+        color: black;
+        margin-right: 15px;
+        font-size: 14px;
+    }
+    input,textarea {
+        width: 100%;
+        outline: none;
+        border: 1px solid #31d35c;
+        font-size: 15px;
+        padding: 8px 10px;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+    }
+
+    textarea {
+        resize: none;
+        height: 125px;
+    }
+    select{
+        border: 1px solid #31d35c;
+        width: 100%;
+        height: 100%;
+        border-radius: 3px;
+        padding: 8px 10px;
+    }
+
+}

@@ -1,0 +1,30 @@
+{% extends 'admin.html' %}
+{% block content %}
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Edit Date</th>
+        <th>Actived</th>
+        <th>Commit</th>
+    </tr>
+
+        {%  if document %}
+            {% for item in document %}
+                  <tr>
+                <th>{{ item.id }}</th>
+                <th>{{ item.title }}</th>
+                <th>{{ item.description }}</th>
+                <th><img src="{{ item.image.url }}" alt=""{{ item.title }} height="100" width="100"></th>
+                <th>{{ item.editDate.date }}</th>
+                <th>{{ item.is_active }}</th>
+                <th><a href="detail/{{ item.id }}">Detail</a><a href="edit/{{ item.id }}">Edit</a><a href="">Delete</a></th>
+
+                    </tr>
+            {% endfor %}
+        {% endif %}
+
+</table>
+{% endblock %}

@@ -1,13 +1,23 @@
-<form method="post"  enctype="multipart/form-data">
-    {% csrf_token %}
-{#     <label for="title">Title: </label>#}
-{#    <input id="title" type="text" name="title" value="{{ form.title }}">#}
-{#     <label for="description">Description: </label>#}
-{#    <input id="description" type="text" name="description" value="{{ form.description }}">#}
-{#    <label for="link">Link: </label>#}
-{#    <input id="link" type="text" name="link" value="{{ form.link }}">#}
-{#    <label for="type">Type: </label>#}
-{#    <input id="type" type="text" name="type" value="{{ form.type }}">#}
-    {{ form.as_p }}
+{% extends 'admin.html' %}
 
+{% block content %}
+<p method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+     <label for="title">Title: </label>
+    <p id="title"  name="title">{{ document.title }}</p>
+     <label for="description">Description: </label>
+    <p id="description" name="description">{{ document.description }}</p>
+    <label for="link">Link: </label>
+    <p id="link" name="link" >{{ document.link }}</p>
+    <label for="type">Type: </label>
+    <p id="type"  name="type">{{ document.type }}</p>
+    <p>Tags {% for item in topic %}
+        <button class="button"> {{ item.title}}<a href="#" >X</a></button>
+    {% endfor %}
+        <button class="button">+</button>
+    </p>
+  <a href="/document/delete/{{ document.id }}" class="button">Delete</a>
+    <a href="/document/edit/{{ document.id }}" class="button">Edit</a>
 </form>
+
+{% endblock %}

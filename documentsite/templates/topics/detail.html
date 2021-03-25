@@ -1,13 +1,19 @@
+{% extends 'admin.html' %}
+{% block content %}
 <form method="post"  enctype="multipart/form-data">
     {% csrf_token %}
-{#     <label for="title">Title: </label>#}
-{#    <input id="title" type="text" name="title" value="{{ form.title }}">#}
-{#     <label for="description">Description: </label>#}
-{#    <input id="description" type="text" name="description" value="{{ form.description }}">#}
-{#    <label for="link">Link: </label>#}
-{#    <input id="link" type="text" name="link" value="{{ form.link }}">#}
-{#    <label for="type">Type: </label>#}
-{#    <input id="type" type="text" name="type" value="{{ form.type }}">#}
-    {{ form.as_p }}
-
+     <label for="title">Title: </label>
+    <p id="title" name="title">{{ topic.title }} </p>
+     <label for="description">Description: </label>
+    <p id="description" name="description" >{{ topic.description }}</p>
+     <p for="description">Description: </p>
+    <img src="{{ topic.image.url }}" alt="">
+ <p>Tags {% for item in document %}
+        <button class="button"> {{ item.title}}<a href="#" >X</a></button>
+    {% endfor %}
+        <button class="button">+</button>
+    </p>
+    <a href="/topic/delete/{{ topic.id }}" class="button">Delete</a>
+    <a href="/topic/edit/{{ topic.id }}" class="button">Edit</a>
 </form>
+{% endblock %}

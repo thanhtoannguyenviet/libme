@@ -7,6 +7,7 @@ from documentsite import views,urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('my_profile',views.profile,name='my_profile'),
     path('', include(urls)),
     path('navigation', views.navigation, name='navigation'),
     path('detailpage/<id>', views.detailPDF_page),

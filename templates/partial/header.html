@@ -1,3 +1,5 @@
+
+    {% load render_partial %}
  <header class="header">
     <div class="overlay has-fade"></div>
     <nav class="container flex flex-jc-sb flex-ai-c">
@@ -16,7 +18,11 @@
         <a href="#">Blog</a>
         <a href="#">Careers</a>
       </div>
-      <a href="#" class="button header__cta hide-for-mobile">Request Invite</a>
+        {%   if user.is_authenticated == False %}
+      <a href="/login" class="button header__cta hide-for-mobile">Login</a>
+        {% else %}
+              {% render_partial 'my_profile' %}
+        {% endif %}
     </nav>
     <div class="header__menu has-fade">
       <a href="#">Home</a>

@@ -8,7 +8,7 @@
     <h2>Latest Articles</h2>
 
     <div class="article__grid">
-
+{% if document %}
  {% for item in document %}
          <a href="#" class="article__item">
         <div class="article__image" style="background-image: url('{{ item.image.url }}')"></div>
@@ -21,6 +21,9 @@
       </a>
 
 {% endfor %}
+    {% else %}
+        <a href="" style="width: 500px">Hiện tại chủ đề này chưa có tài liệu</a>
+    {% endif %}
     </div>
   </div>
   </section>

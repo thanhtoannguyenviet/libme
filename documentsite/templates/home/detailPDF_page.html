@@ -4,7 +4,13 @@
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/web/pdf_viewer.js"></script>
 
+  <section class="articles">
 
+  <div class="article__content container container--pall">
+
+    <h2>{{ document.title }}</h2>
+
+    <div class="article__grid">
 <div id="my_pdf_viewer">
     <div id="canvas_container" >
         <canvas id="the-canvas"></canvas>
@@ -33,7 +39,7 @@
         // Using promise to fetch the page
         pdfDoc.getPage(num).then(function (page) {
             var viewport = page.getViewport({ scale: scale });
-            canvas.height = 625;
+            canvas.height = 650;
             canvas.width = 500;
             // Render PDF page into canvas context
             var renderContext = {
@@ -109,4 +115,8 @@
         renderPage(pageNum);
     });
     </script>
+          </div>
+  </div>
+  </section>
+
 {% endblock %}

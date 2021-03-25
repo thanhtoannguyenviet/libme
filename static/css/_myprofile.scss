@@ -1,0 +1,45 @@
+.profile{
+   position: relative;
+      display: inline-block;
+  &__img{
+    margin-top: -20px;
+      width: 50px;
+      height: 50px;
+  }
+  &__dropdown {
+    position: absolute;
+      &:hover .profile__dropdown__list {
+        z-index: 1000;
+        opacity: 1;
+        visibility: visible;
+      }
+       &__select{
+      padding: 1.5rem;
+      border-radius: 4px;
+      background-color: white;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 1.6rem;
+      cursor: pointer;
+    }
+      &__list{
+        border-radius: 4px;
+        background-color: white;
+        top: 110%;
+        left: 0;
+        right: 0;
+        opacity: 0;
+        visibility: hidden;  margin-top: 35px;
+          width: 200px;
+        transition: opacity 0.2s linear, visibility 0.2s linear;
+        &__item{
+          padding: 1rem;
+          font-size: 1rem;
+
+        }
+      }
+  }
+
+}

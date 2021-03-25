@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Document, Topic
+from .models import Document, Topic, TopicDocument
 
 admin.site.register(Document)
 admin.site.register(Topic)
+admin.site.register(TopicDocument)

@@ -5,11 +5,12 @@ from django.contrib import messages
 
 from .decorators import unauthenticated_user, allowed_users, admin_only
 from .forms import DocumentForm, TopicForm, TopicDocumentForm, CreateUserForm
-from .models import Document, Topic, TopicDocument
+from .models import Document, Topic, TopicDocument, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
+import requests
 
 # from .forms import DocumentForm
 
@@ -20,12 +21,15 @@ def register_page(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+            user.set_password(user.password)
+            user.save()
             group = Group.objects.get(name='customer')
             user.groups.add(group)
             username = form.cleaned_data.get('email')
             messages.success(request, 'Account was created for' + username)
     context = {'form': form}
     return render(request, 'registration/signin.html', context)
+
 
 
 @unauthenticated_user
@@ -69,6 +73,17 @@ def navigation(request):
     }
     return render(request, "home/navigation.html", context)
 
+# def history(request):
+#     user = User.objects.get(email=request.user.email)
+#     res = requests.get("localhost:")
+
+def profile(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(email=request.user.email)
+    else:
+        user = None
+    return render(request, "account/my-profile.html", {"profile": user})
+
 
 class DocumentView:
 
@@ -77,7 +92,7 @@ class DocumentView:
         context = {
             "document": document
         }
-        return render(request, "home/home_page.html", context)
+        return render(request, "document/index.html", context)
 
     @login_required(login_url='login')
     @admin_only
@@ -105,7 +120,7 @@ class DocumentView:
         if form.is_valid():
             form.save()
             return redirect('/')
-        return render(request, 'document/create.html', {'form': form})
+        return render(request, 'document/create.html', {'form': form.instance})
 
     @login_required(login_url='login')
     @admin_only
@@ -120,9 +135,23 @@ class DocumentView:
             for topicDocument in lstopicdocument:
                 idDoc = topicDocument.idDocument
                 if idDoc != None:
-                    document = Document.objects.get(id=idDoc.id)
+                    document = Document.objects.get(id=idDoc.id, is_active=True)
                     listDocument.append(document)
             return render(request, 'home/home_page.html', {'document': listDocument})
+
+    @login_required(login_url='login')
+    @admin_only
+    def detail(request, id):
+        document = Document.objects.get(id=id)
+        lstopicdocument = TopicDocument.objects.filter(idTopic=id)
+        if lstopicdocument is not None:
+            listTopic = []
+            for topicDocument in lstopicdocument:
+                idTopic = topicDocument.idTopic
+                if idTopic != None:
+                    topic = Topic.objects.get(id=idTopic.id)
+                    listTopic.append(topic)
+        return render(request, 'document/detail.html', {'document': document, 'topic': listTopic})
 
 
 class TopicView:
@@ -132,7 +161,7 @@ class TopicView:
         context = {
             "topic": topic
         }
-        return render(request, "home/home_page.html", context)
+        return render(request, "topics/index.html", context)
 
     @login_required(login_url='login')
     @admin_only
@@ -167,15 +196,27 @@ class TopicView:
         topic = Topic.objects.get(id=id)
         topic.delete()
 
+    def detail(request, id):
+        topic = Topic.objects.get(id=id)
+        lstopicdocument = TopicDocument.objects.filter(idTopic=id)
+        if lstopicdocument is not None:
+            listDocument = []
+            for topicDocument in lstopicdocument:
+                idDoc = topicDocument.idDocument
+                if idDoc != None:
+                    document = Document.objects.get(id=idDoc.id, is_active=True)
+                    listDocument.append(document)
+        return render(request, 'topics/detail.html', {'document': listDocument, 'topic': topic})
+
 
 class TopicDocumentView:
 
-    # def index(request):
-    #     topicDocument = TopicDocument.objects.all()
-    #     context = {
-    #         "topicDocument": topicDocument
-    #     }
-    #     return render(request, "home/home_page.html", context)
+    def index(request):
+        topicDocument = TopicDocument.objects.all()
+        context = {
+            "topicDocument": topicDocument
+        }
+        return render(request, "topic/index.html", context)
 
     @login_required(login_url='login')
     @admin_only

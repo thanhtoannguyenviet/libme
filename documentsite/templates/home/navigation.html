@@ -1,25 +1,11 @@
-
-<aside class="aside">
-  <h2 class="aside__title">Chủ đề</h2>
-  <nav class="position-sticky pt-3" id="toc">
-    <ul class="nav flex-column">
-        {% if topic != None %}
-          {% for item in topic %}
-           <li class="nav-item"><a class="nav-link active" href="/topic/{{ item.id }}" > <img src="{{ item.image.url }}" alt="" style="width: 50px;height: 50px">{{ item.title }}</a></li>
-            {% endfor %}
-        {% endif %}
-    </ul>
-  </nav>
-</aside>
-{#<aside class="bd-aside sticky-xl-top text-muted align-self-start mb-3 mb-xl-5 px-2">#}
-{#  <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Chủ đề</h2>#}
-{#  <nav class="position-sticky pt-3" id="toc">#}
-{#    <ul class="nav flex-column">#}
-{#        {% if topic != None %}#}
-{#          {% for item in topic %}#}
-{#           <li class="nav-item"><a class="nav-link active" href="#"> <img src="{{ item.image.url }}" alt="" style="width: 50px;height: 50px">{{ item.title }}</a></li>#}
-{#            {% endfor %}#}
-{#        {% endif %}#}
-{#    </ul>#}
-{#  </nav>#}
-{#</aside>#}
+<div class="aside__left">
+    <div class="logo"></div>
+        <div class="aside__left__nav">
+            {% if topic != None %}
+                {% for item in topic %}
+                    <a href="/topic/{{ item.id }}"><span style="display: flex;line-height: 30px"><img src="{{ item.image.url }}" alt="" height="30" width="30">{{ item.title }}</span></a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
