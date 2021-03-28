@@ -16,6 +16,7 @@ urlpatterns = [
     path('register/', views.register_page),
     path('login/', views.login_page),
     path('logout/', views.logout_page),
+    path('api/',include('restapi.urls')),
     path('', include("django.contrib.auth.urls")),
 ]
 if settings.DEBUG:
