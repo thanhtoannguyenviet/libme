@@ -10,7 +10,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 
+import json
 import requests
+
 
 # from .forms import DocumentForm
 
@@ -29,7 +31,6 @@ def register_page(request):
             messages.success(request, 'Account was created for' + username)
     context = {'form': form}
     return render(request, 'registration/signin.html', context)
-
 
 
 @unauthenticated_user
@@ -60,9 +61,28 @@ def home_page(request):
 
 def detailPDF_page(request, id):
     document = Document.objects.get(id=id)
-    context = {
-        "document": document
-    }
+    idUser = request.user.id
+    page = 0
+    if (idUser):
+        page = requests.get('http://127.0.0.1:8000/api/document/get-detail/' + str(idUser) + '/' + str(id))
+        if (page.status_code == 500):
+            page = requests.post('http://127.0.0.1:8000/api/document/create/', data=
+            {"User_id": request.user.id, "Document_id": document.id, "page": 1})
+            context = {
+                "document": document,
+                "page":0
+            }
+        else:
+            numpage = json.loads(page.text)
+            context = {
+                "document": document,
+                "page": numpage['page']
+            }
+    else:
+        context = {
+            "document": document,
+            "page": 0
+        }
     return render(request, "home/detailPDF_page.html", context)
 
 
@@ -72,6 +92,7 @@ def navigation(request):
         "topic": topic
     }
     return render(request, "home/navigation.html", context)
+
 
 # def history(request):
 #     user = User.objects.get(email=request.user.email)

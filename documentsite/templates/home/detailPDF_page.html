@@ -22,6 +22,7 @@
         <button id="next">Next</button>
     </div>
   </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
      <script>
      var url = '{{ document.link.url }}';
     var pdfDoc = null,
@@ -31,9 +32,9 @@
         scale =1,
         canvas = document.getElementById('the-canvas'),
         ctx = canvas.getContext('2d');
-            /*if (@trang != 0) {
-                pageNum=@trang;
-            }*/
+        {% if page %}
+         pageNum=     {{ page}}
+        {% endif %}
     function renderPage(num) {
         pageRendering = true;
         // Using promise to fetch the page
@@ -69,25 +70,47 @@
             }
         }
     )
-        function queueRenderPage(num) {
 
-       /* $.ajax({
-            type: "POST",
-            url: "https://localhost:44385/api/CheckHistory/",
+        function queueRenderPage(num) {
+            {% if request.user.id %}
+                function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+                console.log(num)
+        $.ajax({
+            type: "PUT",
+            url: "http://127.0.0.1:8000/api/document/update/",
             dataType: "json",
-           // data: { MaSV:@sv.MaSV, MaSach:@Model.MaSach, SoTrang: num },
+            data: { User_id: {{request.user.id}}, Document_id: {{document.id}} , page: num },
+            headers: {
+                "X-CSRFToken":getCookie('csrftoken')
+            },
             success: function (res) {
-        console.log(res)
+                console.log(res)
             },
             error: function (err) {
-        console.log("ERROR:" + err)
+                console.log("ERROR:" + err.message)
             }
-        })*/
+        })
+            {% endif %}
         if (pageRendering) {
            pageNumPending = num;
        } else {
            renderPage(num);
        }
+
     }
     function onPrevPage() {
         if (pageNum <= 1) {
