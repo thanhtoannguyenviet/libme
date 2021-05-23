@@ -35,14 +35,17 @@ def register_page(request):
 
 @unauthenticated_user
 def login_page(request):
-    if request.method == 'POST':
-        user = authenticate(request, username=request.POST.get('username'), password=request.POST.get('password'))
-        if user is not None:
-            login(request, user)
-            redirect('/')
-        else:
-            messages.info(request, 'User or password is incorrect')
     context = {}
+    if request.method == 'POST':
+        try:
+            user = authenticate(request, username=request.POST.get('username'), password=request.POST.get('password'))
+            if user is not None:
+                login(request, user)
+                redirect('/')
+                if user.is_staff:
+                    return render(request, 'home/admin_page.html',context)
+        except:
+            messages.error(request, 'User or password is incorrect')
     return render(request, 'registration/login.html', context)
 
 

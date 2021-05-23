@@ -203,6 +203,10 @@ button:hover::before,
   }
 }
 
+.error {
+  color: red;
+}
+
 .header.open .overlay {
   display: block;
 }
